@@ -4,3 +4,5 @@ __pycache__/
 .DS_Store
 testing.py
 archive-2/
+combined_data.csv
+test_preprocessed_binary.csv
