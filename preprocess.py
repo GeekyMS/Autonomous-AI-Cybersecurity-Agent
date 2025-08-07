@@ -28,6 +28,10 @@ def engineer_features(df):
     new_df['total_bytes'] = df['Total Length of Fwd Packets'] + df[' Total Length of Bwd Packets']   
     new_df['bytes_per_second'] = df['Flow Bytes/s']
     new_df['Label'] = df[' Label']
+
+    new_df['packets_per_second'] = new_df['packets_per_second'].clip(upper=1e6)
+    new_df['bytes_per_second'] = new_df['bytes_per_second'].clip(upper=1e8)
+
     return new_df
 
 
@@ -36,6 +40,7 @@ def convert_to_binary_labels(df):
     new_df = df.copy()
     label_map = {"BENIGN":0}
     new_df['binary_label'] = new_df['Label'].map(label_map).fillna(1)
+    new_df = new_df.dropna(subset=['binary_label'])
     return new_df
 
 def save_preprocessed_data(df, filename="preprocessed_data.csv"):
