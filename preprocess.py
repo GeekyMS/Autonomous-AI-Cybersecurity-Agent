@@ -32,6 +32,10 @@ def engineer_features(df):
     new_df['packets_per_second'] = new_df['packets_per_second'].clip(upper=1e6)
     new_df['bytes_per_second'] = new_df['bytes_per_second'].clip(upper=1e8)
 
+    new_df = new_df[new_df['packets_per_second'] >= 0]
+    new_df = new_df[new_df['bytes_per_second'] >= 0]
+    new_df = new_df[new_df['total_packets'] >= 0]
+
     return new_df
 
 

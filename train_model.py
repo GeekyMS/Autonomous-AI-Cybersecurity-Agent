@@ -1,5 +1,6 @@
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import pickle
 import pandas as pd
@@ -13,7 +14,7 @@ def split_data(df):
     return (X_train, y_train, X_val, y_val, X_test, y_test)
 
 def train_model(X_train, y_train, X_val, y_val):
-    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model = XGBClassifier(random_state=42, scale_pos_weight=9.9)
     model.fit(X_train, y_train)
 
     #Validation

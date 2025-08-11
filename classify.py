@@ -16,7 +16,10 @@ def make_prediction(input_data):
     if model is None:
         load_model()
     
-    df = pd.DataFrame([input_data])
+    if isinstance(input_data, pd.DataFrame):
+        df = input_data
+    else:
+        df = pd.DataFrame([input_data])
 
     prediction = model.predict(df)[0]
     probability = model.predict_proba(df)[0]
