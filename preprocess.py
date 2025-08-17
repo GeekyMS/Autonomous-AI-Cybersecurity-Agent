@@ -7,7 +7,7 @@ def load_raw_data(filename):
         
         required_columns = [' Flow Duration', ' Total Fwd Packets', ' Total Backward Packets', 
                             ' Flow Packets/s', 'Total Length of Fwd Packets', 
-                            ' Total Length of Bwd Packets', 'Flow Bytes/s', ' Label']
+                            ' Total Length of Bwd Packets', 'Flow Bytes/s']
         missing_columns = [col for col in required_columns if col not in df.columns]
         if missing_columns:
             raise ValueError(f"Missing required columns: {missing_columns}")
@@ -27,14 +27,19 @@ def engineer_features(df):
     new_df['packets_per_second'] = df[' Flow Packets/s']
     new_df['total_bytes'] = df['Total Length of Fwd Packets'] + df[' Total Length of Bwd Packets']   
     new_df['bytes_per_second'] = df['Flow Bytes/s']
+
     new_df['Label'] = df[' Label']
 
     new_df['packets_per_second'] = new_df['packets_per_second'].clip(upper=1e6)
     new_df['bytes_per_second'] = new_df['bytes_per_second'].clip(upper=1e8)
 
-    new_df = new_df[new_df['packets_per_second'] >= 0]
-    new_df = new_df[new_df['bytes_per_second'] >= 0]
-    new_df = new_df[new_df['total_packets'] >= 0]
+    numeric_cols = new_df.select_dtypes(include=[float, int]).columns
+
+    for col in numeric_cols:
+        new_df = new_df[new_df[col] >= 0]
+    
+    new_df = new_df.replace([float('inf'), -float('inf')], float('nan'))
+    new_df = new_df.fillna(0)
 
     return new_df
 
