@@ -1,9 +1,10 @@
 import openai
 import json
+from config import Config
 
 class ThreatAnalyzer:
-    def __init__(self, key):
-        self.client = openai.OpenAI(api_key=key)
+    def __init__(self):
+        self.client = openai.OpenAI(api_key=Config.OPENAI_API_KEY)
     
     def _get_llm_response(self, prompt):
 

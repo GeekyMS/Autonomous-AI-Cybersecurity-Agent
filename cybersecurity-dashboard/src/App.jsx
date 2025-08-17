@@ -4,7 +4,7 @@ import './App.css'
 function App() {
   const [threats, setThreats] = useState([])
 
-  useState(()=> {
+  useEffect(()=> {
     const eventSource = new EventSource('http://localhost:5001/events');
   eventSource.onmessage = (event) => {
     const threatData = JSON.parse(event.data);
@@ -22,7 +22,7 @@ function App() {
       {threats.map((threat) => (
       <div key={threat.ip + threat.time} className={`threat-box threat-${threat.threat_level.toLowerCase()}`}>
       <h3>{threat.threat_level == "CRITICAL" ? "🔴" : threat.threat_level == "HIGH" ? "⚠️" : threat.threat_level == "MEDIUM" ? "🟡" : "🟢"} {threat.threat_level} THREAT DETECTED</h3>
-      <p>{threat.attack_type} Attack detected from IP: {threat.ip}</p>
+      <p>{threat.attack_type} Traffic detected from IP: {threat.ip}</p>
       <p>Time: {threat.time}</p>
       <p>Confidence: {threat.confidence * 100}%</p>
 

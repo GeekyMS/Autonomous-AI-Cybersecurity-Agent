@@ -24,8 +24,8 @@ class flowData:
 
         return {'flow_duration': duration,
                 'total_packets': self.packets,
-                'total_bytes': self.total_bytes,
                 'packets_per_second': self.packets / duration,
+                'total_bytes': self.total_bytes,
                 'bytes_per_second': self.total_bytes / duration
                 }
 
@@ -69,8 +69,13 @@ class flowTracker:
             self.flows[flow_key] = flowData()
 
         self.flows[flow_key].add_packet(packet)
+
+        features = self.flows[flow_key].get_current_features()
         
-        return self.flows[flow_key].get_current_features()
+        if features:
+            features["ip"] = flow_key[0]
+
+        return features
 
     def cleanup(self):
         if len(self.flows) < self.max_flows:

@@ -1,12 +1,13 @@
 import pickle
 import pandas as pd
+from config import Config
 
 model = None
 
 def load_model():
     global model
     try:
-        with open('cybersecurity_model.pkl', 'rb') as f:
+        with open(Config.MODEL_FILE_PATH, 'rb') as f:
             model = pickle.load(f)
             print("Model loaded successfully.")
     except Exception as e:

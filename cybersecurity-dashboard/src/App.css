@@ -9,9 +9,9 @@ body {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  text-align: center;
 }
 .header {
-  border-bottom: 2px solid #333;
   margin-bottom: 30px;
   padding-bottom: 20px;
   text-align: center;
