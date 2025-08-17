@@ -5,3 +5,4 @@ Flask
 Flask-Cors
 scapy
 openai
+python-dotenv
