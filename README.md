@@ -17,7 +17,7 @@ The results are displayed on a **live cybersecurity dashboard**.
 - **Real-time Packet Sniffing** – Captures live network traffic for analysis.  
 - **Flow Analysis** – Groups packets into flows and extracts key features.  
 - **ML-Based Threat Detection** – Classifies network flows using a trained **XGBoost model**.  
-- **LLM-Powered Threat Explanation** – Provides:  
+- **LLM-Powered Threat Explanation** – Requires an **OpenAI API key**. Provides:  
   - Assessment of attack type  
   - Comparison with ML prediction  
   - Technical & user-friendly explanations  
