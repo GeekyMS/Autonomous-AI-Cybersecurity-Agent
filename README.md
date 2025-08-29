@@ -28,12 +28,48 @@ The results are displayed on a **live cybersecurity dashboard**.
 
 ## ⚙️ How It Works
 
-1. **Packet Sniffing** – `sniff.py` captures packets in real time.  
-2. **Flow Extraction** – `flow.py` groups packets into flows and extracts features (e.g., duration, total packets, bytes/sec).  
-3. **Classification** – `classify.py` uses a **pre-trained XGBoost model** to classify flows and assign confidence scores.  
-4. **LLM Analysis** – `explain.py` uses an LLM to provide a **human-readable analysis** of threats.  
-5. **Backend Server** – `server.py` (Flask) streams results to the frontend.  
-6. **Frontend Dashboard** – A React app (`cybersecurity-dashboard/`) displays real-time threat monitoring.  
+Here is a high-level overview of the system's architecture:
+
+```mermaid
+graph TD
+    A[Live Network Traffic] --> B(sniff.py);
+    B --> C{flow.py};
+    C --> D[classify.py];
+    D -- Malicious --> E{explain.py};
+    D -- Benign --> F[server.py];
+    E --> F;
+    F --> G(Cybersecurity Dashboard);
+
+    subgraph Backend
+        B[Packet Sniffing<br>sniff.py]
+        C[Flow Extraction<br>flow.py]
+        D[ML Classification<br>classify.py]
+        E[LLM Analysis<br>explain.py]
+        F[API Server<br>server.py]
+    end
+
+    subgraph Frontend
+        G[React App<br>cybersecurity-dashboard]
+    end
+
+    style B fill:#cce5ff,stroke:#333,color:#000
+    style C fill:#cce5ff,stroke:#333,color:#000
+    style D fill:#cce5ff,stroke:#333,color:#000
+    style E fill:#cce5ff,stroke:#333,color:#000
+    style F fill:#cce5ff,stroke:#333,color:#000
+    style G fill:#d4edda,stroke:#333,color:#000
+```
+Packet Sniffing – sniff.py captures packets in real time.
+
+Flow Extraction – flow.py groups packets into flows and extracts features (e.g., duration, total packets, bytes/sec).
+
+Classification – classify.py uses a pre-trained XGBoost model to classify flows and assign confidence scores.
+
+LLM Analysis – explain.py uses an LLM to provide a human-readable analysis of threats.
+
+Backend Server – server.py (Flask) streams results to the frontend.
+
+Frontend Dashboard – A React app (cybersecurity-dashboard/) displays real-time threat monitoring.  
 
 ---
 
